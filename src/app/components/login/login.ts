@@ -4,6 +4,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-
+    MatProgressSpinnerModule
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -20,6 +21,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 export class Login {
     form: FormGroup;
     private _snackBar = inject(MatSnackBar);
+    loading = false;
+
 
   constructor(private fb : FormBuilder) {
     this.form = this.fb.group({
@@ -36,9 +39,11 @@ export class Login {
     console.log(password)
 
     if (usuario == "admin" && password == "admin") {
-      this.mostrarMensaje("Usuario ingresado correctamente", "cerrar");
+      this.mostrarMensaje("Usuario ingresado correctamente", "");
+      this.fakeLoading();
     } else {
       this.mostrarMensaje("Credenciales incorrectas", "cerrar");
+      this.form.reset();
 
     }
   }
@@ -47,6 +52,13 @@ export class Login {
     this._snackBar.open(mensaje, accion, {
       duration: 4000
     });
+  }
+
+  fakeLoading() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false
+    },1500);
   }
 
 }

@@ -1,20 +1,26 @@
 <div class="body">
   <div class="login">
-    <form [formGroup]="form" (ngSubmit)="ingresar()" ) )>
+    @if (loading) {
+      <mat-spinner [diameter]="50" class="spinner"></mat-spinner>
+    }
+    @if (!loading) {
+      <form [formGroup]="form" (ngSubmit)="ingresar()" ) )>
 
-      <img src="./assets/img/usuario.png" width="50%">
-      <h1>Login</h1>
-      <mat-form-field class="ancho" appearance="fill">
-        <mat-label>Usuario</mat-label>
-        <input matInput formControlName="usuario">
-      </mat-form-field>
-      <mat-form-field class="ancho" appearance="fill">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password">
-      </mat-form-field>
-      <button [disabled]="form.invalid" type="submit" class="ancho boton" matButton="filled">Ingresar</button>
+        <img src="./assets/img/usuario.png" width="50%">
+        <h1>Login</h1>
+        <mat-form-field class="ancho" appearance="fill">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="usuario">
+        </mat-form-field>
+        <mat-form-field class="ancho" appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+        <button [disabled]="form.invalid" type="submit" class="ancho boton" matButton="filled">Ingresar</button>
 
-    </form>
+      </form>
+    }
+
   </div>
 </div>
 
