@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <span>AppUsers</span>
+  <span class="example-spacer"></span>
+<!--  @for (item of menu; track item.nombre) {-->
+<!--    <button matButton [routerLink]="item.redirect"> {{item.nombre}} </button>-->
+<!--  } @empty {-->
+<!--    <button matButton > Algo esta mal </button>-->
+<!--  }-->
+
+  @for (item of (menu$ | async); track item.nombre) {
+    <button matButton [routerLink]="item.redirect"> {{item.nombre}} </button>
+  } @empty {
+    <button matButton > Algo esta mal </button>
+  }
+  <span class="example-spacer"></span>
+  <button routerLink="/logout" mat-icon-button class="example-icon">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

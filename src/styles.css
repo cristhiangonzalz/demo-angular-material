@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+/* Cambia indigo-pink por alguno de estos */
+/*@import "@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+/*@import "@angular/material/prebuilt-themes/purple-green.css";*/
+
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.toolbar-personalizado {
+  --mat-toolbar-container-background-color: #e9e9f3;
+}
+
+.mat-mdc-table {
+  margin-top: 5px;
+}

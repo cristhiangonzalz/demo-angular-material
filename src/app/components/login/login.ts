@@ -27,8 +27,8 @@ export class Login {
 
   constructor(private fb : FormBuilder, private router: Router) {
     this.form = this.fb.group({
-      usuario: ['', Validators.required],
-      password: ['', Validators.required]
+      usuario: ['admin', Validators.required],
+      password: ['admin', Validators.required]
     })
   }
 
@@ -59,7 +59,7 @@ export class Login {
     this.loading = true;
     setTimeout(() => {
       this.router.navigate(['dashboard']);
-    },1500);
+    },400);
   }
 
 }
