@@ -3,8 +3,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class Login {
     loading = false;
 
 
-  constructor(private fb : FormBuilder) {
+  constructor(private fb : FormBuilder, private router: Router) {
     this.form = this.fb.group({
       usuario: ['', Validators.required],
       password: ['', Validators.required]
@@ -57,7 +58,7 @@ export class Login {
   fakeLoading() {
     this.loading = true;
     setTimeout(() => {
-      this.loading = false
+      this.router.navigate(['dashboard']);
     },1500);
   }
 
