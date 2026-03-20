@@ -3,39 +3,58 @@
     <span>Usuarios</span>
   </mat-toolbar>
 
+  <mat-form-field>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. juan" #input>
+  </mat-form-field>
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef> Usuario</th>
+      <td mat-cell *matCellDef="let element"> {{ element.usuario }}</td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre</th>
+      <td mat-cell *matCellDef="let element"> {{ element.nombre }}</td>
     </ng-container>
 
     <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    <ng-container matColumnDef="apellido">
+      <th mat-header-cell *matHeaderCellDef> Apellido</th>
+      <td mat-cell *matCellDef="let element"> {{ element.apellido }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    <ng-container matColumnDef="sexo">
+      <th mat-header-cell *matHeaderCellDef> Sexo</th>
+      <td mat-cell *matCellDef="let element"> {{ element.sexo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element" style="text-align: right">
+        <a class="pointer" style="color:#05163a;">
+          <mat-icon matTooltip="Ver usuario">search</mat-icon>
+        </a>
+        <a class="pointer" style="color:#344709;">
+          <mat-icon matTooltip="Editar">edit</mat-icon>
+        </a>
+        <a class="pointer" style="color:#af2b2b;">
+          <mat-icon matTooltip="Borrar">delete</mat-icon>
+        </a>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
 
 
 </div>

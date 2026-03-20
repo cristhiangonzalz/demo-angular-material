@@ -1,37 +1,46 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {Usuario} from '../../../interfaces/usuario';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const listaUsuarios: Usuario[] = [
+  {usuario: "1", nombre: 'Juan', apellido: "Perez", sexo: 'Masculino'},
+  {usuario: "2", nombre: 'Alberto', apellido: "Moreira", sexo: 'Masculino'},
+  {usuario: "3", nombre: 'Carlos', apellido: "Costa", sexo: 'Masculino'},
+  {usuario: "4", nombre: 'Ignacio', apellido: "Cabral", sexo: 'Masculino'},
+  {usuario: "5", nombre: 'Maria', apellido: "Perez", sexo: 'Femenino'},
+  {usuario: "6", nombre: 'Andres', apellido: "Sirio", sexo: 'Masculino'},
+
 ];
 
 @Component({
   selector: 'app-usuarios',
   imports: [
     MatToolbar,
-    MatTableModule
+    MatTableModule,
+    MatIcon,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })
-export class Usuarios {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+export class Usuarios implements OnInit {
+  displayedColumns: string[] = ['usuario', 'nombre', 'apellido', 'sexo', 'acciones'];
+  dataSource = new MatTableDataSource(listaUsuarios);
+
+  ngOnInit(): void {
+    // console.log(this.dataSource);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
