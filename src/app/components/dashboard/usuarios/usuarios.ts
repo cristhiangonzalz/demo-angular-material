@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {Usuario} from '../../../interfaces/usuario';
@@ -6,17 +6,15 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-
-
-const listaUsuarios: Usuario[] = [
-  {usuario: "1", nombre: 'Juan', apellido: "Perez", sexo: 'Masculino'},
-  {usuario: "2", nombre: 'Alberto', apellido: "Moreira", sexo: 'Masculino'},
-  {usuario: "3", nombre: 'Carlos', apellido: "Costa", sexo: 'Masculino'},
-  {usuario: "4", nombre: 'Ignacio', apellido: "Cabral", sexo: 'Masculino'},
-  {usuario: "5", nombre: 'Maria', apellido: "Perez", sexo: 'Femenino'},
-  {usuario: "6", nombre: 'Andres', apellido: "Sirio", sexo: 'Masculino'},
-
-];
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort, MatSortModule} from '@angular/material/sort';
+import {UsuarioService} from '../../../services/usuario-service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import {Dialog} from './dialog/dialog';
 
 @Component({
   selector: 'app-usuarios',
@@ -26,21 +24,69 @@ const listaUsuarios: Usuario[] = [
     MatIcon,
     MatTooltipModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginator,
+    MatSort,
+    MatSortModule,
+    MatDialogModule
   ],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })
-export class Usuarios implements OnInit {
+export class Usuarios implements AfterViewInit, OnInit {
+
   displayedColumns: string[] = ['usuario', 'nombre', 'apellido', 'sexo', 'acciones'];
-  dataSource = new MatTableDataSource(listaUsuarios);
+  listaUsuarios: Usuario[] = [];
+  dataSource!: MatTableDataSource<any>;
+  readonly dialog = inject(MatDialog);
+
+  constructor(private _usuarioService: UsuarioService, private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
-    // console.log(this.dataSource);
+    this.obtenerUsuarios();
+  }
+
+  obtenerUsuarios() {
+    this.listaUsuarios = this._usuarioService.getUsuario();
+    this.dataSource = new MatTableDataSource(this.listaUsuarios);
+  }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
+
+  eliminarUsuario(usuario: string) {
+    this.openDialog('0ms', '0ms');
+    this.listaUsuarios = this._usuarioService.eliminarUsuario(usuario);
+    this.dataSource.data = this.listaUsuarios;
+    this.ngAfterViewInit();
+    this._snackBar.open("Usuarios eliminado correctamente", "", {
+      duration: 1000
+    });
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(Dialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
 }
+
