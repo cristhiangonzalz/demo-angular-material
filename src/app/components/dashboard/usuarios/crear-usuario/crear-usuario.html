@@ -1,0 +1,19 @@
+<div class="container">
+  <mat-toolbar class="toolbar-personalizado">
+    <span>Crear Usuario</span>
+  </mat-toolbar>
+
+  <mat-card style="margin-top: 10px;">
+    <form>
+      <mat-grid-list cols="4" rowHeight="70px">
+        @for (tile of tiles; track tile) {
+          <mat-grid-tile
+            [colspan]="tile.cols"
+            [rowspan]="tile.rows"
+            [style.background]="tile.color">{{tile.text}}</mat-grid-tile>
+        }
+      </mat-grid-list>
+
+    </form>
+  </mat-card>
+</div>

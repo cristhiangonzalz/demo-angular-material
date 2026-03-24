@@ -14,7 +14,8 @@ import {
   MatDialog,
   MatDialogModule,
 } from '@angular/material/dialog';
-import {Dialog} from './dialog/dialog';
+import {MatButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -28,7 +29,9 @@ import {Dialog} from './dialog/dialog';
     MatPaginator,
     MatSort,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButton,
+    RouterLink
   ],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
@@ -51,6 +54,7 @@ export class Usuarios implements AfterViewInit, OnInit {
     this.listaUsuarios = this._usuarioService.getUsuario();
     this.dataSource = new MatTableDataSource(this.listaUsuarios);
   }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -71,7 +75,6 @@ export class Usuarios implements AfterViewInit, OnInit {
   }
 
   eliminarUsuario(usuario: string) {
-    this.openDialog('0ms', '0ms');
     this.listaUsuarios = this._usuarioService.eliminarUsuario(usuario);
     this.dataSource.data = this.listaUsuarios;
     this.ngAfterViewInit();
@@ -79,14 +82,5 @@ export class Usuarios implements AfterViewInit, OnInit {
       duration: 1000
     });
   }
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(Dialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
-
 }
 
