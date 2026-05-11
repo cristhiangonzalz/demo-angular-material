@@ -5,13 +5,44 @@
 
   <mat-card style="margin-top: 10px;">
     <form>
+
       <mat-grid-list cols="4" rowHeight="70px">
-        @for (tile of tiles; track tile) {
-          <mat-grid-tile
-            [colspan]="tile.cols"
-            [rowspan]="tile.rows"
-            [style.background]="tile.color">{{tile.text}}</mat-grid-tile>
-        }
+        <mat-grid-tile [colspan]="1" [rowspan]="1" >
+          <mat-form-field appearance="outline" class="input-crear-usuario">
+            <mat-label >Usuario</mat-label>
+            <input matInput >
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="5" >
+          <img src="assets/img/usuario.png" height="250" width="250" alt="">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-form-field appearance="outline" class="input-crear-usuario">
+            <mat-label>Nombre</mat-label>
+            <input matInput >
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-form-field appearance="outline" class="input-crear-usuario">
+            <mat-label>Apellido</mat-label>
+            <input matInput >
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-form-field appearance="outline" class="input-crear-usuario">
+            <mat-label>Sexo</mat-label>
+            <mat-select>
+              @for (sexo of sexos; track sexo) {
+                <mat-option [value]="sexo.value">{{sexo}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background-color]="'lightblue'">
+          Botón de Volver y Aceptar
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background-color]="'lightblue'">
+        </mat-grid-tile>
       </mat-grid-list>
 
     </form>

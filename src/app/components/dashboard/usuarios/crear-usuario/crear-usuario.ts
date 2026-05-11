@@ -2,13 +2,19 @@ import { Component } from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-crear-usuario',
   imports: [
     MatToolbar,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelectModule
   ],
   templateUrl: './crear-usuario.html',
   styleUrl: './crear-usuario.css',
@@ -21,4 +27,6 @@ export class CrearUsuario {
     {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
     {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
   ];
+
+  sexos: any[] = ['Masculino','Femenino', 'Otro'];
 }
